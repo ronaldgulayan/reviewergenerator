@@ -1,0 +1,41 @@
+@font-face {
+  font-family: "RobotoRegular";
+  src: url(./assets/fonts/Roboto-Regular.ttf);
+}
+@font-face {
+  font-family: "RobotoBold";
+  src: url(./assets/fonts/Roboto-Bold.ttf);
+}
+@font-face {
+  font-family: "RobotoThin";
+  src: url(./assets/fonts/Roboto-Thin.ttf);
+}
+@font-face {
+  font-family: "Condenced";
+  src: url(./assets/fonts/Roboto-BoldCondensedItalic.ttf);
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.scroll::-webkit-scrollbar {
+  width: 12px;
+}
+
+.scroll::-webkit-scrollbar-track {
+  background: #ddd;
+  border-radius: 10px;
+  padding: 1px;
+  width: 100px;
+}
+
+.scroll::-webkit-scrollbar-thumb {
+  background-color: #333;
+  border-radius: 20px;
+  border: 2px solid #ddd;
+}
+
+.scroll-hidden::-webkit-scrollbar {
+  display: none;
+}
