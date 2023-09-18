@@ -46,10 +46,10 @@ function MainPage() {
   };
 
   return (
-    <div className='w-full h-screen relative py-pad-3 flex justify-center bg-lightest'>
+    <div className='w-full h-screen min-h-screen relative py-0 md:py-pad-3 flex justify-center bg-lightest'>
       {/* Background here */}
-      <div className='md:w-[70%] relative lg:w-[50%] w-[95%] bg-white min-h-full rounded-xl shadow-md px-10 py-9 text-dark flex flex-col gap-y-2'>
-        <div className='absolute bottom-6 w-full left-0 justify-center scroll-hidden gap-x-1 flex overflow-x-scroll'>
+      <div className='md:w-[70%] relative lg:w-[50%] w-full bg-white h-full md:rounded-xl shadow-md px-5 py-7 md:px-10 md:py-9 text-dark flex flex-col gap-y-2'>
+        <div className='absolute z-10 bottom-6 w-full left-0 justify-left pl-10 scroll-hidden gap-x-1 flex overflow-x-scroll'>
           <Button
             onClick={() => {
               window.print();
@@ -57,18 +57,26 @@ function MainPage() {
             label='DOWNLOAD PDF'
             Icon={FaFilePdf}
           />
-          <Button label='PREVIEW' Icon={MdOutlinePreview} />
           <Button label='RESET' Icon={BiReset} />
         </div>
         <div className='font-roboto-regular h-10 flex items-center justify-between font-bold text-xl'>
           <h1>
             Reviewer Generator{" "}
-            <span>{list.length !== 0 && `(${list.length})`}</span>
+            {list.length !== 0 && <span>{`(${list.length})`}</span>}
           </h1>
-          <AiFillPlusCircle
-            onClick={addListEvent}
-            className='text-dark select-none w-6 h-6 cursor-pointer'
-          />
+          <div className='flex items-center gap-x-4'>
+            <button
+              title='Show Preview'
+              className='text-xs bg-green-500 px-3 py-1 text-white rounded-md'
+            >
+              Preview
+            </button>
+            <AiFillPlusCircle
+              title='Add Item'
+              onClick={addListEvent}
+              className='text-dark select-none w-6 h-6 cursor-pointer'
+            />
+          </div>
         </div>
         <DragDropContext onDragEnd={drapEndEvent}>
           <Droppable type='group' droppableId='ROOT'>

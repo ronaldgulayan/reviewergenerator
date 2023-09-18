@@ -92,6 +92,11 @@ function SmartField({
     return () => document.removeEventListener("mousedown", clickOutsideEvent);
   }, [isSelected]);
 
+  const titleSubmitEvent = (e) => {
+    e.preventDefault();
+    textAreaRef.current.focus();
+  };
+
   return (
     <div
       title={`ITEM ${count}`}
@@ -100,7 +105,10 @@ function SmartField({
       onClick={() => setIsSelected(true)}
       className='group data-[select=true]:border-darkest w-full h-fit cursor-pointer gap-x-1 justify-center flex-col p-2 rounded-md bg-white flex hover:bg-slate-100 border-2 border-slate-400'
     >
-      <div className='w-full p-1 flex items-center gap-x-1'>
+      <form
+        onSubmit={titleSubmitEvent}
+        className='w-full p-1 flex items-center gap-x-1'
+      >
         <input
           value={title}
           onChange={titleChangeEvent}
@@ -119,7 +127,7 @@ function SmartField({
           title={`DELETE ITEM ${count}`}
           className='w-10 text-dark h-10 p-2 hover:bg-slate-400 rounded-md duration-200'
         />
-      </div>
+      </form>
       <div
         data-select={isSelected}
         className='w-full grid px-1 data-[select=false]:grid-rows-[0] data-[select=true]:grid-rows-1 overflow-hidden data-[select=true]:py-1'
