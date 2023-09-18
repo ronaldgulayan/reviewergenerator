@@ -88,8 +88,8 @@ function SmartField({
         setIsSelected(false);
       }
     };
-    document.addEventListener("mousedown", clickOutsideEvent);
-    return () => document.removeEventListener("mousedown", clickOutsideEvent);
+    document.addEventListener("click", clickOutsideEvent);
+    return () => document.removeEventListener("click", clickOutsideEvent);
   }, [isSelected]);
 
   const titleSubmitEvent = (e) => {
@@ -103,8 +103,11 @@ function SmartField({
       ref={divRef}
       data-select={isSelected}
       onClick={() => setIsSelected(true)}
-      className='group data-[select=true]:border-darkest w-full h-fit cursor-pointer gap-x-1 justify-center flex-col p-2 rounded-md bg-white flex hover:bg-slate-100 border-2 border-slate-400'
+      className='group relative data-[select=true]:border-darkest w-full h-fit cursor-pointer gap-x-1 justify-center flex-col p-2 rounded-md bg-white flex hover:bg-slate-100 border-2 border-slate-400'
     >
+      <span className='absolute text-xs top-[0.05rem] left-[0.15rem] text-slate-400'>
+        {count}
+      </span>
       <form
         onSubmit={titleSubmitEvent}
         className='w-full p-1 flex items-center gap-x-1'

@@ -57,7 +57,18 @@ function MainPage() {
             label='DOWNLOAD PDF'
             Icon={FaFilePdf}
           />
-          <Button label='RESET' Icon={BiReset} />
+          <Button
+            onClick={() => {
+              const response = window.confirm(
+                "Are you sure you want to reset all data?"
+              );
+              if (response) {
+                setList([]);
+              }
+            }}
+            label='RESET'
+            Icon={BiReset}
+          />
         </div>
         <div className='font-roboto-regular h-10 flex items-center justify-between font-bold text-xl'>
           <h1>
