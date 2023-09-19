@@ -1,10 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import DocumentViewer from "./DocumentViewer";
 import { TiArrowBack } from "react-icons/ti";
 import PDFDownloadButton from "./PDFDownloadButton";
 
 function Drawer({ data, isShow = false, setIsShow = function () {} }) {
-  const [documentTitle, setDocumentTitle] = useState("Document Preview");
+  const [documentTitle, setDocumentTitle] = useState(
+    localStorage.getItem("title") || "Document Preview"
+  );
+
+  useEffect(() => {
+    localStorage.setItem("title", documentTitle);
+  }, [documentTitle]);
 
   return (
     <div
