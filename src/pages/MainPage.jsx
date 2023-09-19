@@ -19,7 +19,9 @@ const Button = ({ label, Icon, onClick }) => {
 };
 
 function MainPage() {
-  const [list, setList] = useState(JSON.parse(localStorage.getItem("data")));
+  const [list, setList] = useState(
+    JSON.parse(localStorage.getItem("data")) || []
+  );
 
   useEffect(() => {
     localStorage.setItem("data", JSON.stringify(list));
