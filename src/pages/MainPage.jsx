@@ -5,6 +5,7 @@ import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { FaFilePdf } from "react-icons/fa";
 import { MdOutlinePreview } from "react-icons/md";
 import { BiReset } from "react-icons/bi";
+import Drawer from "../components/Drawer";
 
 const Button = ({ label, Icon, onClick }) => {
   return (
@@ -18,7 +19,11 @@ const Button = ({ label, Icon, onClick }) => {
 };
 
 function MainPage() {
-  const [list, setList] = useState([]);
+  const [list, setList] = useState(JSON.parse(localStorage.getItem("data")));
+
+  useEffect(() => {
+    localStorage.setItem("data", JSON.stringify(list));
+  }, [list]);
 
   const drapEndEvent = (result) => {
     if (!result.destination) return;
@@ -45,38 +50,35 @@ function MainPage() {
     });
   };
 
+  const [isShow, setIsShow] = useState(false);
+
   return (
     <div className='w-full h-screen min-h-screen relative py-0 md:py-pad-3 flex justify-center bg-lightest'>
       {/* Background here */}
-      <div className='md:w-[70%] relative lg:w-[50%] w-full bg-white h-full md:rounded-xl shadow-md px-5 py-7 md:px-10 md:py-9 text-dark flex flex-col gap-y-2'>
-        <div className='absolute z-10 bottom-6 w-full left-0 justify-left pl-10 scroll-hidden gap-x-1 flex overflow-x-scroll'>
-          <Button
-            onClick={() => {
-              window.print();
-            }}
-            label='DOWNLOAD PDF'
-            Icon={FaFilePdf}
-          />
-          <Button
-            onClick={() => {
-              const response = window.confirm(
-                "Are you sure you want to reset all data?"
-              );
-              if (response) {
-                setList([]);
-              }
-            }}
-            label='RESET'
-            Icon={BiReset}
-          />
-        </div>
-        <div className='font-roboto-regular h-10 flex items-center justify-between font-bold text-xl'>
+      <div className='md:w-[70%] overflow-hidden relative lg:w-[50%] w-full bg-white h-full md:rounded-xl shadow-md px-5 py-7 md:px-10 md:py-9 text-dark flex flex-col gap-y-2'>
+        <Drawer data={list} isShow={isShow} setIsShow={setIsShow} />
+        <div className='font-roboto-regular h-10 flex items-center justify-between font-bold text-lg'>
           <h1>
             Reviewer Generator{" "}
             {list.length !== 0 && <span>{`(${list.length})`}</span>}
           </h1>
-          <div className='flex items-center gap-x-4'>
+          <div className='flex items-center gap-x-2'>
             <button
+              onClick={() => {
+                const response = window.confirm(
+                  "Are you sure you want to reset all data?"
+                );
+                if (response) setList([]);
+              }}
+              title='Reset'
+              className='text-xs bg-green-500 px-3 py-1 text-white rounded-md'
+            >
+              Reset
+            </button>
+            <button
+              onClick={() => {
+                setIsShow(true);
+              }}
               title='Show Preview'
               className='text-xs bg-green-500 px-3 py-1 text-white rounded-md'
             >
@@ -93,7 +95,7 @@ function MainPage() {
           <Droppable type='group' droppableId='ROOT'>
             {(provided) => (
               <div
-                className='h-[calc(100%-2.5rem)] pb-10 flex flex-col overflow-y-scroll pr-1 scroll'
+                className='h-[calc(100%-2.5rem)] flex flex-col overflow-y-scroll pr-1 scroll'
                 {...provided.droppableProps}
                 ref={provided.innerRef}
               >

@@ -113,7 +113,7 @@ function SmartField({
         className='w-full p-1 flex items-center gap-x-1'
       >
         <input
-          value={title}
+          value={title ? title : "Loading..."}
           onChange={titleChangeEvent}
           ref={titleRef}
           data-select={isSelected}
